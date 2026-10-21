@@ -1,11 +1,11 @@
-# Nuevols URL Publisher · v4
+# Nuevols URL Publisher · v4.1
 
 Kendi kod şablonunu hedef URL'lerle doldur, rastgele isimli dosyaları
 GitHub'a yükle ve jsDelivr bağlantılarını al. İşlemler artık tek ekrandadır.
 
 ## Kullanım
 
-`nuevols-generator.html` dosyasını indir ve tarayıcıda aç. Üstte **v4 · tek ekran**
+`nuevols-generator.html` dosyasını indir ve tarayıcıda aç. Üstte **v4.1 · tek ekran**
 yazısını görmelisin. Kod ve GitHub ayarları gerektiğinde açılan bölümlerdedir.
 
 Dört ana düğme aynı satırda, bu sırayla yer alır:
@@ -102,3 +102,12 @@ taklit nesneler kullanılır. Bu ortamda gerçek tarayıcı testi yapılamamış
 
 Önceki `viewer.html` ve `configs/demo.json` bağımsız örneklerdir; bu akışın
 çalışması için gerekmez. Repo otomatik GitHub Pages yayını açmaz.
+
+## GitHub hata ayrıntıları
+
+Hata mesajı artık başarısız işlemin adını ve GitHub'ın `message`/`errors`
+yanıtını gösterir. HTTP 422 otomatik olarak branch kuralı sorunu sayılmaz.
+Token hata metninden çıkarılır. Branch güncellemesi 409/422 ile başarısız
+olur ve branch başının değiştiği doğrulanırsa, dosyalar güncel sürümün
+üzerine bir kez daha eklenir. Baş değişmediyse veya ikinci deneme de hata
+verirse tekrar edilmez; gerçek hata gösterilir. Force-push kullanılmaz.
