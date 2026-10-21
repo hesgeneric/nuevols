@@ -1,117 +1,120 @@
 # Nuevols URL Publisher
 
-Kendi kod şablonunu gir, hedef URL'leri değişkenlere yerleştir, rastgele
-isimli dosyaları GitHub'a yükle ve jsDelivr bağlantılarını al.
+Üç adımda kendi dosyalarını oluşturup GitHub'a yükler ve jsDelivr bağlantılarını alırsın.
 
-## Kullanım
+## 1. Hazırla
 
-1. `nuevols-generator.html` dosyasını indir ve tarayıcıda aç.
-2. Hedef URL'leri her satıra bir adres olacak şekilde gir.
-3. Dosya türünü seç: `.js`, `.json` veya `.txt`.
-4. **Yüklenecek kod şablonu** alanına kendi içeriğini yaz/yapıştır.
-5. Hedef URL'nin yerleşeceği konumlara `{{URL}}` veya `{{URL_JSON}}` koy.
-6. **Dosyaları hazırla** düğmesine bas. Önizlemeyi incele veya dosya paketini indir.
-7. GitHub anahtarını gir; **Bağlantıyı kontrol et → GitHub'a yükle** sırasını uygula.
-8. Düzenlenebilir sonuçları kopyala veya TXT indir.
+`nuevols-generator.html` dosyasını indirip tarayıcıda aç. Hedef adresleri
+satır satır gir. **Kod şablonu** alanında kendi içeriğini düzenle; dosya
+uzantısını `.js`, `.json` veya `.txt` olarak seç. **Hazırla ve devam et**
+düğmesi her hedef için ayrı, rastgele isimli bir dosya oluşturur.
 
-## Kod değişkenleri
-
-| Değişken | Yerine konulan değer |
+| Kod değişkeni | Yerleştirilen değer |
 | --- | --- |
 | `{{URL}}` | Doğrulanmış hedef URL, ham metin olarak |
-| `{{URL_JSON}}` | Tırnakları ve kaçışları dahil JavaScript/JSON string değeri |
-
-JavaScript örneği:
+| `{{URL_JSON}}` | Tırnakları ve kaçışlarıyla bir JavaScript/JSON string değeri |
 
 ```js
 const targetUrl = {{URL_JSON}};
 console.log(targetUrl);
 ```
 
-`https://example.com/` için oluşan içerik:
-
-```js
-const targetUrl = "https://example.com/";
-console.log(targetUrl);
-```
-
 `{{URL_JSON}}` etrafına ayrıca tırnak koyma. `{{URL}}` ham metindir;
-JavaScript string'i içinde kullanırsan kaçışları sen yönetirsin.
-Değişkenler şablondaki bütün eşleşmelerde tek geçişte değiştirilir.
-Diğer kod içeriği değiştirilmez. URL protokolü yoksa `https://` eklenir;
-URL tarayıcının URL kurallarına göre normalize edilir.
+string içinde kullanırsan kaçışları sen yönetirsin. Şablondaki bütün
+uygun değişkenler tek geçişte değiştirilir; kodun geri kalanı korunur.
 
-JSON örneği:
+Protokol yazılmazsa `https://` eklenir. Boş satırlar ve tekrarlar atlanır;
+bir işlemde en fazla 500 adres hazırlanır. Girilen kod generator içinde
+çalıştırılmaz. JSON modunda oluşturulan dosyanın JSON biçimi kontrol edilir.
+Dosya uzantısını seçmek kodu başka bir dile çevirmez.
 
-```json
-{
-  "targetUrl": {{URL_JSON}}
-}
-```
+## 2. Yükle
 
-Bu örnek, yer tutucu doldurulduktan sonra geçerli JSON olur. JSON modunda
-üretilen dosya parse edilerek kontrol edilir. JavaScript ve metin modlarında
-sözdizimi kontrolü yapılmaz. Girilen kod generator içinde çalıştırılmaz.
-Dosya türü seçimi kodu başka dile çevirmez; yalnızca dosya uzantısını belirler.
+GitHub token'ını ilk kullanımda gir. Repo ayarları gerektiğinde açılan
+**GitHub ayarları** bölümündedir. Varsayılanlar:
 
-## GitHub kurulumu
+| Ayar | Değer |
+| --- | --- |
+| Kullanıcı | hesgeneric |
+| Repo | nuevols |
+| Branch | Repo varsayılanı otomatik algılanır |
+| Klasör | configs |
 
-[Fine-grained anahtar oluşturma sayfasını aç](https://github.com/settings/personal-access-tokens/new).
+[Fine-grained GitHub token oluştur](https://github.com/settings/personal-access-tokens/new):
 
 | Ayar | Değer |
 | --- | --- |
 | Token name | Nuevols Publisher |
 | Resource owner | hesgeneric |
-| Expiration | Örneğin 30 gün |
 | Repository access | Only select repositories → nuevols |
 | Repository permissions | Contents → Read and write |
 
-**Generate token** düğmesine basıp çıkan anahtarı araçtaki parola alanına gir.
-Anahtarı sohbet mesajına yazma. Repo varsayılanı `hesgeneric/nuevols`,
-klasör `configs`. Branch boşsa repo varsayılanı algılanır.
+**Generate token** düğmesine basıp değeri araçtaki alana gir. Token bu
+tarayıcıda saklanır; sonraki açılışlarda ve yüklemelerde korunur.
+**Kayıtlı token'ı sil** düğmesi tarayıcıdaki kopyasını temizler.
+ChatGPT'nin GitHub bağlantısı bağımsız HTML'ye otomatik yetki sağlamaz.
 
-Anahtar yalnızca GitHub API'ye gönderilir; dosyalara veya localStorage'a
-kaydedilmez. Yükleme denemesi bittiğinde parola alanı temizlenir. Kod şablonu
-ve diğer ayarlar tarayıcıda kaydedilir; hedef listesi ve sonuçlar kaydedilmez.
-ChatGPT'nin GitHub bağlantısı bu bağımsız HTML uygulamasına otomatik yetki sağlamaz.
+Dosyaları yüklemeden önce içerik önizlemesini görebilir veya ZIP indirebilirsin.
+**GitHub'a yükle** düğmesi yükleme bitince sonuç adımını açar.
 
-## Çıktı URL şablonu
+## 3. Sonuçlar
 
-| Değişken | Değer |
-| --- | --- |
-| `{{FILE_URL}}` | jsDelivr dosya bağlantısı |
-| `{{FILE_URL_ENCODED}}` | URL parametresi için kodlanmış bağlantı |
-| `{{FILENAME}}` | Rastgele dosya adı ve uzantısı |
-| `{{PATH}}` | Repo içindeki dosya yolu |
+Çıktı adresinden önce baştaki `https://` (veya `http://`) kaldırılır;
+kalan adres `encodeURIComponent` ile encode edilir. Ardından önek aynen eklenir:
 
-Yalnızca dosya bağlantılarını almak için `{{FILE_URL}}` bırak.
-Sonuç kutusu ayrıca elle düzenlenebilir. Şablon değişiklikleri sonuçları
-anında yeniden üretir; yayımlanan dosyaları değiştirmez.
+```text
+önek + encodeURIComponent(protokolsüzDosyaAdresi)
+```
+
+Öneksiz örnek:
+
+```text
+cdn.jsdelivr.net%2Fgh%2Fhesgeneric%2Fnuevols%40COMMIT%2Fconfigs%2Fdosya.js
+```
+
+`https://example.com/?file=` önekiyle:
+
+```text
+https://example.com/?file=cdn.jsdelivr.net%2Fgh%2Fhesgeneric%2Fnuevols%40COMMIT%2Fconfigs%2Fdosya.js
+```
+
+Önek ayrıca encode edilmez; kullanıcı ne yazarsa aynen eklenir. Öneki
+değiştirmek sonuçları anında yeniden oluşturur, yüklenen dosyalara dokunmaz.
+Sonuç kutusu elle düzenlenebilir; bu düzenlemeler de kaydedilir.
+Bağlantılar kopyalanabilir veya TXT olarak indirilebilir.
+
+## Kaydedilen bilgiler
+
+- GitHub token'ı ve repo ayarları.
+- Kod şablonu, dosya türü ve hedef URL listesi.
+- Sonuç öneki, hazırlanmış dosyaların bilgisi, yükleme sürümü ve sonuç listesi.
+- Son açık adım.
+
+Kayıtlar `localStorage` ile aynı tarayıcı ve aynı dosya adresinde saklanır.
+Güncel HTML'yi önceki dosyanın üzerine koyup aynı yerden açarsan önceki
+kod/repo ayarları da taşınır. Dosyayı başka adrese taşımak veya tarayıcı
+verilerini silmek kayıtların erişilememesine yol açabilir. Depolama kapalı
+veya doluysa ekranın üstünde **Kaydedilemedi** bilgisi gösterilir.
+Token indirilen ZIP'lere veya GitHub'a yüklenen dosyalara eklenmez;
+yalnızca GitHub API yetkilendirmesinde ve yerel kayıtta kullanılır.
 
 ## Yükleme davranışı
 
-- En fazla 500 adres; boş satırlar atlanır, tekrarlar kaldırılır.
-- Dosya adları kriptografik rastgele sayı üreteciyle oluşturulur.
-- Mevcut repoda dosyalar tek commit ile eklenir; mevcut ağaç korunur.
-- Boş repo ilk dosyayla başlatılır. Kalan dosyalarda hata olursa yalnızca
-  yüklenen dosyanın sonucu gösterilir.
-- Branch güncellemesi force-push kullanmaz. Branch koruma kuralları geçerlidir.
-- Önizleme, dosyanın yüklendiği anlamına gelmez. Yükleme sonrası URL'ler
-  commit hash'i içerir. CDN erişimi uygulama tarafından ayrıca doğrulanmaz.
-- Ağ kesilirse sunucudaki işlemin tamamlanıp tamamlanmadığı belirsiz kalabilir;
-  yeniden denemeden önce repo geçmişini kontrol et.
-- Dosyalar herkese açıktır. jsDelivr kalıcı kopya tutabilir; GitHub'dan silmek
-  CDN kopyasının kaldırılmasını garanti etmez.
+Mevcut repoda dosyalar tek commit ile eklenir ve diğer içerik korunur.
+Boş repo önce ilk dosyayla başlatılır. Kalan dosyalar yüklenemezse yalnızca
+başarılı olan dosyanın sonucu gösterilir. Branch force-push ile güncellenmez.
+Önizleme çıktısı yükleme tamamlandığı anlamına gelmez; başarılı yüklemeden
+sonra bağlantılar commit sürümüne sabitlenir. CDN erişimi ayrıca doğrulanmaz.
+Ağ kesintisinde yeniden denemeden önce repo geçmişini kontrol et.
+Dosyalar herkese açıktır; CDN silinmiş dosyaların kopyasını tutabilir.
 
-Önceki sürümden kalan `viewer.html` ve `configs/demo.json` bağımsız JSON
-örnekleridir. Yeni JavaScript yayınlama akışının çalışması için gerekmez.
+Önceki sürümdeki `viewer.html` ve `configs/demo.json` bağımsız örneklerdir;
+yeni arayüzün çalışması için gerekmez. Repo GitHub Pages yayınını otomatik açmaz.
 
-## Doğrulama
+## Testler
 
-`node tests/test.cjs` ile bağımlılıksız testleri çalıştırabilirsin.
-Kod şablonu değişkenleri, içeriğin çalıştırılmaması, uzantı seçimi, JSON
-kontrolü, URL kodlaması, anahtarın saklanmaması, GitHub API akışı ve yarım
-kalan yükleme davranışı taklit yanıtlarla test edilir. Test ayrıca geçici
-dizinde ZIP üretir. Görsel tarayıcı testi yapılmamıştır.
-
-Repo otomatik GitHub Pages yayını açmaz. Generator doğrudan dosyadan çalışır.
+`node tests/test.cjs` komutu bağımlılıksız davranış testlerini çalıştırır.
+Üç adımlı geçiş, verilen örnekle birebir URL encoding, önekin değişmeden
+eklenmesi, token/ayar/sonuç geri yükleme, token silme, eski kayıtların
+taşınması, depolama hatası, kod değişkenleri ve GitHub API hata senaryoları
+kontrol edilir. Canlı GitHub API testleri yerine taklit yanıtlar kullanılır.
