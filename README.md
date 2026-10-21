@@ -50,12 +50,17 @@ GitHub token'ını ilk kullanımda gir. Repo ayarları gerektiğinde açılan
 | Repository permissions | Contents → Read and write |
 
 **Generate token** düğmesine basıp değeri araçtaki alana gir. Token bu
-tarayıcıda saklanır; sonraki açılışlarda ve yüklemelerde korunur.
+tarayıcıda ayrı bir kalıcı kayıtta saklanır; sonraki açılışlarda ve
+yüklemelerde korunur. Tarayıcı parola alanını boşaltsa bile kayıtlı token
+kullanılır. Token için yazma, değiştirme, odaktan çıkma ve sayfadan ayrılma
+anlarında kayıt yapılır.
 **Kayıtlı token'ı sil** düğmesi tarayıcıdaki kopyasını temizler.
 ChatGPT'nin GitHub bağlantısı bağımsız HTML'ye otomatik yetki sağlamaz.
 
 Dosyaları yüklemeden önce içerik önizlemesini görebilir veya ZIP indirebilirsin.
-**GitHub'a yükle** düğmesi yükleme bitince sonuç adımını açar.
+**GitHub'a yükle** düğmesi yükleme bitince sonuç adımını açar ve ekranı
+yumuşakça sonuçların başına kaydırır. Yeşil başarı kutusu bağlantıların
+hemen üstünde görünür. Azaltılmış hareket tercihi açıksa kaydırma animasyonsuzdur.
 
 ## 3. Sonuçlar
 
@@ -117,4 +122,6 @@ yeni arayüzün çalışması için gerekmez. Repo GitHub Pages yayınını otom
 Üç adımlı geçiş, verilen örnekle birebir URL encoding, önekin değişmeden
 eklenmesi, token/ayar/sonuç geri yükleme, token silme, eski kayıtların
 taşınması, depolama hatası, kod değişkenleri ve GitHub API hata senaryoları
-kontrol edilir. Canlı GitHub API testleri yerine taklit yanıtlar kullanılır.
+kontrol edilir. Parola alanı boşalsa bile token kaydının korunması ve başarı
+paneline kaydırma da test edilir. Canlı GitHub API testleri yerine taklit
+yanıtlar kullanılır.
